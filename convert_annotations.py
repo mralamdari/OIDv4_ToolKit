@@ -39,14 +39,14 @@ DIRS = os.listdir(os.getcwd())
 for DIR in DIRS:
     if os.path.isdir(DIR):
         os.chdir(DIR)
-        print("Currently in subdirectory:", DIR)
+        print(f"Currently in subdirectory: {DIR}")
         
         CLASS_DIRS = os.listdir(os.getcwd())
         # for all class folders step into directory to change annotations
         for CLASS_DIR in CLASS_DIRS:
             if os.path.isdir(CLASS_DIR):
                 os.chdir(CLASS_DIR)
-                print("Converting annotations for class: ", CLASS_DIR)
+                print(f"Converting annotations for class: {CLASS_DIR}")
                 
                 # Step into Label folder where annotations are generated
                 os.chdir("Label")
@@ -60,10 +60,9 @@ for DIR in DIRS:
                                 for class_type in classes:
                                     line = line.replace(class_type, str(classes.get(class_type)))
                                 labels = line.split()
-                                coords = np.asarray([float(labels[1]), float(labels[2]), float(labels[3]), float(labels[4])])
+                                coords = np.asarray([float(labels[-4]), float(labels[-3]), float(labels[-2]), float(labels[-1])])
                                 coords = convert(filename_str, coords)
-                                labels[1], labels[2], labels[3], labels[4] = coords[0], coords[1], coords[2], coords[3]
-                                newline = str(labels[0]) + " " + str(labels[1]) + " " + str(labels[2]) + " " + str(labels[3]) + " " + str(labels[4])
+                                newline = '_'.join(labels[:-4]) + f' {coords[0]} {coords[1]} {coords[2]} {coords[3]}'
                                 line = line.replace(line, newline)
                                 annotations.append(line)
                             f.close()
