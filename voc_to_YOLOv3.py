@@ -9,7 +9,7 @@ from lxml import etree
 XML_DIR = ''
 
 #os.chdir('Dataset')
-os.chdir(os.path.join("OID", "Dataset"))
+os.chdir("OID/Dataset")
 DIRS = os.listdir(os.getcwd())
 
 for DIR in DIRS:
