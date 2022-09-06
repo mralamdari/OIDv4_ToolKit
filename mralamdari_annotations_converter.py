@@ -74,3 +74,6 @@ for DIR in DIRS:
                 shutil.rmtree(os.path.join(os.getcwd(), "Label"))
                 os.chdir("..")
         os.chdir("..")
+        with open(f'{ROOT_DIR}\classes.txt', 'w+') as cls_text:
+            for cls_name in classes:
+                cls_text.write(f'{cls_name}\n')
