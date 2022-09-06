@@ -25,15 +25,27 @@ def convert(filename_str, coords):
 ROOT_DIR = os.getcwd()
 
 # create dict to map class names to numbers for yolo
+
+
+
+
+
+classes_path = 'OID/Dataset/train/'
+class_names = os.listdir(classes_path)
+
+#write class's names and remove the label folder in each class folder
 classes = {}
-with open("classes.txt", "r") as myFile:
-    for num, line in enumerate(myFile, 0):
-        line = line.rstrip("\n")
-        classes[line] = str(num)
-    myFile.close()
+with open('classes.txt', 'w+') as classes_file:
+  for idx, cls in enumerate(class_names):
+    classes_file.write(cls)
+    shutil.rmtree(f'{classes_path}Label')
+    classes[cls] = str(idx)
+    
+
 # step into dataset directory
 os.chdir(os.path.join("OID", "Dataset"))
 DIRS = os.listdir(os.getcwd())
+
 
 # for all train, validation and test folders
 for DIR in DIRS:
