@@ -48,7 +48,6 @@ for DIR in DIRS:
                 os.chdir("Label")
 
                 for filename in tqdm(os.listdir(os.getcwd())):
-#                     filename_str = filename.split(".")[0]
                     if filename.endswith(".txt"):
                         filename_str = filename[:-4]
                         annotations = []
