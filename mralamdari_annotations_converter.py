@@ -60,7 +60,7 @@ for DIR in DIRS:
                                 labels = line.split()
                                 coords = np.asarray([float(labels[-4]), float(labels[-3]), float(labels[-2]), float(labels[-1])])
                                 coords = convert(filename_str, coords)
-                                class_index = class_dic.get(' '.join(labels[:-4]))
+                                class_index = classes.get(' '.join(labels[:-4]))
                                 newline = f'{class_index} {coords[0]} {coords[1]} {coords[2]} {coords[3]}'
                                 line = line.replace(line, newline)
                                 annotations.append(line)
