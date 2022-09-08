@@ -1,8 +1,11 @@
 import os
 import cv2
-import shutil
 import numpy as np
 from tqdm import tqdm
+import argparse
+import fileinput
+import shutil
+import re
 
 # function that turns XMin, YMin, XMax, YMax coordinates to normalized yolo format
 def convert(filename_str, coords):
@@ -85,7 +88,7 @@ for DIR in DIRS:
 
 
     #Create obj.names in darknet/data/ 
-    with open(f'{data_path}\obj.names', 'w+') as cls_text:
+    with open(os.path.join(data_path, "obj.names"), 'w+') as cls_text:
         for cls_name in classes:
             cls_text.write(f'{cls_name}\n')
 
@@ -94,7 +97,7 @@ for DIR in DIRS:
     os.rename(images_path, target_images_path)
 
     #Create train.txt And/Or test.txt in darknet/data/ 
-    with open(f'{data_path}\{DIR}.txt', 'w+') as data_file:
+    with open(os.path.join(data_path, f"{DIR}.txt"), 'w+') as data_file:
         for cls_name in classes:
             image_folder_path = os.path.join(target_images_path, cls_name)
             for image_file in os.listdir(image_folder_path):
