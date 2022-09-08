@@ -1,11 +1,9 @@
 import os
+import os
 import cv2
-import numpy as np
-from tqdm import tqdm
-import argparse
-import fileinput
+import tqdm
 import shutil
-import re
+import numpy as np
 
 # function that turns XMin, YMin, XMax, YMax coordinates to normalized yolo format
 def convert(filename_str, coords):
@@ -47,7 +45,7 @@ for DIR in DIRS:
                 # Step into Label folder where annotations are generated
                 os.chdir("Label")
 
-                for filename in tqdm(os.listdir(os.getcwd())):
+                for filename in tqdm.tqdm(os.listdir(os.getcwd())):
                     if filename.endswith(".txt"):
                         filename_str = filename[:-4]
                         annotations = []
