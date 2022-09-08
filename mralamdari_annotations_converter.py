@@ -1,11 +1,8 @@
 import os
 import cv2
+import shutil
 import numpy as np
 from tqdm import tqdm
-import argparse
-import fileinput
-import shutil
-import re
 
 # function that turns XMin, YMin, XMax, YMax coordinates to normalized yolo format
 def convert(filename_str, coords):
@@ -74,7 +71,33 @@ for DIR in DIRS:
                 shutil.rmtree(os.path.join(os.getcwd(), "Label"))
                 os.chdir("..")
         os.chdir("..")
-        with open(f'{ROOT_DIR}\classes.txt', 'w+') as cls_text:
-            for cls_name in classes:
-                cls_text.write(f'{cls_name}\n')
-        os.rename('/content/darknet/OIDv4_ToolKit/OID/Dataset/train', '/content/darknet/data/obj')
+	
+
+    dir_path = os.path.dirname(ROOT_DIR)
+    data_path = os.path.join(dir_path, "data")
+    obj_path = os.path.join(data_path, "obj")
+    images_path = os.path.join(ROOT_DIR,"OID", "Dataset", DIR)
+    #make darknet/data/ directory if it doesn't exists already
+    os.makedirs(data_path, exist_ok=True)
+
+    #make darknet/data/obj directory if it doesn't exists already
+    os.makedirs(obj_path, exist_ok=True)
+
+
+    #Create obj.names in darknet/data/ 
+    with open(f'{data_path}\obj.names', 'w+') as cls_text:
+        for cls_name in classes:
+            cls_text.write(f'{cls_name}\n')
+
+    #Move Train/Test folder to darknet/data/obj/{train/test}
+    target_images_path = os.path.join(obj_path, DIR)
+    os.rename(images_path, target_images_path)
+
+    #Create train.txt And/Or test.txt in darknet/data/ 
+    with open(f'{data_path}\{DIR}.txt', 'w+') as data_file:
+        for cls_name in classes:
+            image_folder_path = os.path.join(target_images_path, cls_name)
+            for image_file in os.listdir(image_folder_path):
+                if image_file.endswith('.jpg'):
+                    data_file.write(f'{os.path.join(image_folder_path, image_file)}\n')
+    data_file.close()
