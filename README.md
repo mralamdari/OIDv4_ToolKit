@@ -1,12 +1,14 @@
 <h1> Forked repository and added conversion python script </h1>
 My added script is: 
-<strong>convert_annotations.py</strong>
+<strong>mralamdari_annotations_converter.py</strong>
 
 Use toolkit normally to gather images from open images dataset. After gathering images just run from root directory:
 ```bash
-python convert_annotations.py
+python mralamdari_annotations_converter.py
 ```
-This will generate .txt annotation files in proper format for custom object detection with YOLOv3. The text files are generated in folder with images.
+This will generate .txt annotation files in proper format for custom object detection with all YOLO models. The text files are generated in folder with images.
+
+The main converter where optimized so that it can be applied for any YOLO models with any number of classes.
 
 <h1 align="center"> ~ OIDv4 ToolKit ~ </h1>
 
